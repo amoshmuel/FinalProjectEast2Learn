@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -33,13 +34,13 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.main.easy2learnproject.Control.FireBase;
 import com.main.easy2learnproject.Control.OnSuccsessCallBack;
 import com.main.easy2learnproject.Control.Permission;
-import com.main.easy2learnproject.Model.Lesson;
 import com.main.easy2learnproject.Model.Photo;
 import com.main.easy2learnproject.Control.OnImageSaveListener;
 import com.main.easy2learnproject.R;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -47,19 +48,21 @@ import java.util.Date;
 public class PhotoActivity extends AppCompatActivity {
 
     private ImageView IMG_addImage;
-    private TextInputLayout LBL_title, LBL_body;
-//    private TextInputLayout LBL_date;
-//    private TextInputEditText ETXT_date;
+//    private TextInputLayout LBL_title, LBL_body;
+    private TextView fullName, price, contact;
+    private RatingBar ratingBar;
     private TextView textViewShowDate;
+    private TextView textView;
+    private int rate;
+    private ImageView IMG_logout;
+//    private TextInputLayout dateTextView;
+//    private TextInputLayout timeTextView;
     private Button BTN_save, BTN_delete;
     private Bitmap imageBitmap = null;
     private static final int TAKE_PHOTO_REQUEST_CODE = 0;
     private static final int CHOOSE_FROM_GALLERY_REQUEST_CODE = 1;
     private Photo photo = null;
-    private Lesson lesson = null;
     private FusedLocationProviderClient fusedLocationClient;
-    private TextInputLayout dateTextView;
-    private TextInputLayout timeTextView;
     private String dateTxt = "-1";
     private String timeTxt = "-1";
 
@@ -99,6 +102,8 @@ public class PhotoActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+//        textView.setText(photo.getFullName());
+
         BTN_save.setClickable(true);
 //        LBL_date.setClickable(false);
 //        ETXT_date.setClickable(false);
@@ -113,28 +118,42 @@ public class PhotoActivity extends AppCompatActivity {
                 checkForValidInput();
             }
         });
-        BTN_delete.setOnClickListener(new View.OnClickListener() {
+
+        ratingBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(photo !=null && photo.getUserId().equals(FireBase.getInstance().getCurrentUser().getUid())){
-                    FireBase.getInstance().deleteFromStorage(photo.getImageId(), new OnSuccsessCallBack() {
-                        @Override
-                        public void isSuccess(boolean b) {
-                            if(b)
-                                if(dateTxt.equals("-1")||timeTxt.equals("-1")){
-                                    Toast.makeText(PhotoActivity.this,"Enter date and time",Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-
-                                FireBase.getInstance().deleteFromFireStore(photo.getPhotoNumber());
-                            PhotoActivity.this.finish();
-                        }
-                    });
-                }else if(photo.getUserId()!=FireBase.getInstance().getCurrentUser().getUid()){
-                    Toast.makeText(PhotoActivity.this,"Delete Only Photo You Upload",Toast.LENGTH_SHORT).show();
-                }
+                rate = ((int) ratingBar.getRating());
             }
         });
+
+        IMG_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openLogoutDialog();
+            }
+        });
+//        BTN_delete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(photo !=null && photo.getUserId().equals(FireBase.getInstance().getCurrentUser().getUid())){
+//                    FireBase.getInstance().deleteFromStorage(photo.getImageId(), new OnSuccsessCallBack() {
+//                        @Override
+//                        public void isSuccess(boolean b) {
+//                            if(b)
+//                                if(dateTxt.equals("-1")||timeTxt.equals("-1")){
+//                                    Toast.makeText(PhotoActivity.this,"Enter date and time",Toast.LENGTH_SHORT).show();
+//                                    return;
+//                                }
+//
+//                                FireBase.getInstance().deleteFromFireStore(photo.getPhotoNumber());
+//                            PhotoActivity.this.finish();
+//                        }
+//                    });
+//                }else if(photo.getUserId()!=FireBase.getInstance().getCurrentUser().getUid()){
+//                    Toast.makeText(PhotoActivity.this,"Delete Only Photo You Upload",Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 //        IMG_addImage.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -146,20 +165,28 @@ public class PhotoActivity extends AppCompatActivity {
 //            }
 //        });
         populatePhoto();
-        dateTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                handleDateButton();
-            }
-        });
+//        dateTextView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                handleDateButton();
+//            }
+//        });
 
-        timeTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                handleTimeButton();
-            }
-        });
+//        timeTextView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                handleTimeButton();
+//            }
+//        });
 
+    }
+
+    private void openLogoutDialog() {
+        Intent myIntent = new Intent(PhotoActivity.this, MainActivity.class);
+        myIntent.setAction("photoActivity");
+        myIntent.putExtra("EMAIL",getIntent().getExtras().get("email").toString());
+        PhotoActivity.this.startActivity(myIntent);
+        PhotoActivity.this.finish();
     }
 
     private void populatePhoto() {
@@ -169,8 +196,11 @@ public class PhotoActivity extends AppCompatActivity {
 
     private void updateViews() {
 //        LBL_date.getEditText().setText(photo.getDate());
-        LBL_title.getEditText().setText(photo.getFullName());
-        LBL_body.getEditText().setText(photo.getEmail());
+//        LBL_title.getEditText().setText(photo.getFullName());
+//        LBL_body.getEditText().setText(photo.getEmail());
+        fullName.setText("Teacher name: \t" + photo.getFullName());
+        price.setText("Price for lesson: \t" + String.valueOf(photo.getPricePerLesson()));
+        contact.setText("Contact info: \t" + photo.getEmail());
         if (photo.getImageId() != null) {
             FireBase.getInstance().downloadStorageData(photo.getImageId(), this, IMG_addImage);
         }
@@ -222,16 +252,16 @@ public class PhotoActivity extends AppCompatActivity {
     }
 
     private void checkForValidInput() {
-        if (LBL_title.getEditText().getText().toString().trim().length() == 0) {
-            Log.d("pttt", "checkForValidInput:title can't be null! ");
-            LBL_title.getEditText().setError("title can't be null!");
-            return;
-        }
-        if (LBL_body.getEditText().getText().toString().trim().length() == 0) {
-            Log.d("pttt", "checkForValidInput: title can't be null!");
-            LBL_body.getEditText().setError("body can't be null!");
-            return;
-        }
+//        if (LBL_title.getEditText().getText().toString().trim().length() == 0) {
+//            Log.d("pttt", "checkForValidInput:title can't be null! ");
+//            LBL_title.getEditText().setError("title can't be null!");
+//            return;
+//        }
+//        if (LBL_body.getEditText().getText().toString().trim().length() == 0) {
+//            Log.d("pttt", "checkForValidInput: title can't be null!");
+//            LBL_body.getEditText().setError("body can't be null!");
+//            return;
+//        }
         BTN_save.setClickable(false);
         checkImageForPhoto();
 
@@ -240,45 +270,47 @@ public class PhotoActivity extends AppCompatActivity {
 
     private void checkImageForPhoto() {
         Log.d("pttt", "checkImageForPhoto: ");
-//        if (photo == null || photo.getImageId() == null) {
-//            FireBase.getInstance().uploadImageToCloud("amos",imageBitmap, new OnImageSaveListener() {
-//                @Override
-//                public void imageSaved(String imageId) {
-//                    updatePhoto(imageId);
-//                }
-//            });
-//        } else
-            addLessomToStore();
-//            updatePhoto(photo.getImageId());
+        if (photo == null || photo.getImageId() == null) {
+            FireBase.getInstance().uploadImageToCloud(photo.getEmail(), imageBitmap, new OnImageSaveListener() {
+                @Override
+                public void imageSaved(String imageId) {
+                    updatePhoto(imageId);
+                }
+            });
+        } else
+            updatePhoto(photo.getImageId());
     }
 
-    private void addLessomToStore() {
-        lesson = new Lesson();
-        lesson.setDate(getDateString());
-        lesson.setTitle(LBL_title.getEditText().toString());
-        lesson.setBody(LBL_body.getEditText().toString());
-        lesson.setUserId(FireBase.getInstance().getCurrentUser().getUid());
-        FireBase.getInstance().updateLessonInFireStore(lesson);
-        this.finish();
-
-    }
+//    private void addLessomToStore() {
+//        lesson = new Lesson();
+//        lesson.setDate(getDateString());
+//        lesson.setTitle(LBL_title.getEditText().toString());
+//        lesson.setBody(LBL_body.getEditText().toString());
+//        lesson.setUserId(FireBase.getInstance().getCurrentUser().getUid());
+//        FireBase.getInstance().updateLessonInFireStore(lesson);
+//        this.finish();
+//
+//    }
 
     private void updatePhoto(String imageId) {
         Log.d("pttt", "updatePhoto: ");
-        boolean flag = false;
-        if (photo == null) {
-            photo = new Photo();
-            flag = true;
-        }
-        photo.setDate(textViewShowDate.getText().toString());
-        photo.setImageId(imageId);
-        photo.setFullName(LBL_title.getEditText().getText().toString());
-        photo.setEmail(LBL_body.getEditText().getText().toString());
-        photo.setUserId(FireBase.getInstance().getCurrentUser().getUid());
-        if (flag) {
-            updateLocation();
-        }else
-            FireBase.getInstance().updatePhotoInFireStore(photo);
+//        boolean flag = false;
+//        if (photo == null) {
+//            photo = new Photo();
+//            flag = true;
+//        }
+        photo.setNumOfRate(photo.getNumOfRate()+1);
+
+        photo.setRate(Double.valueOf(new DecimalFormat("##.##").format(((ratingBar.getRating()+(photo.getRate()*(photo.getNumOfRate()-1)))/photo.getNumOfRate()))));
+//        photo.setDate(textViewShowDate.getText().toString());
+//        photo.setImageId(imageId);
+//        photo.setFullName(LBL_title.getEditText().getText().toString());
+//        photo.setEmail(LBL_body.getEditText().getText().toString());
+//        photo.setUserId(FireBase.getInstance().getCurrentUser().getUid());
+//        if (flag) {
+//            updateLocation();
+//        }else
+        FireBase.getInstance().updatePhotoInFireStore(photo);
         this.finish();
     }
 
@@ -305,14 +337,20 @@ public class PhotoActivity extends AppCompatActivity {
 
     private void findViews() {
         IMG_addImage =(ImageView)findViewById(R.id.photoActivity_IMG_addImage);
-        LBL_title = (TextInputLayout)findViewById(R.id.photoActivity_LBL_title);
-        LBL_body = (TextInputLayout)findViewById(R.id.photoActivity_LBL_body);
+        fullName = findViewById(R.id.activity_photo_TXV_full_name);
+        price = findViewById(R.id.activity_photo_TXV_price);
+        ratingBar = findViewById(R.id.activity_photo_RB_rating);
+        IMG_logout = findViewById(R.id.photoActivity_IMG_back);
+        contact = findViewById(R.id.activity_photo_TXV_contact);
+//        LBL_title = (TextInputLayout)findViewById(R.id.photoActivity_LBL_title);
+//        LBL_body = (TextInputLayout)findViewById(R.id.photoActivity_LBL_body);
 //        LBL_date = (TextInputLayout)findViewById(R.id.photoActivity_LBL_date);
         BTN_save =(Button)findViewById(R.id.photoActivity_BTN_save);
-        BTN_delete =(Button)findViewById(R.id.photoActivity_BTN_delete);
-        dateTextView =(TextInputLayout) findViewById(R.id.photoActivity_dateTextView);
-        timeTextView =(TextInputLayout) findViewById(R.id.photoActivity_timeTextView);
+//        BTN_delete =(Button)findViewById(R.id.photoActivity_BTN_delete);
+//        dateTextView =(TextInputLayout) findViewById(R.id.photoActivity_dateTextView);
+//        timeTextView =(TextInputLayout) findViewById(R.id.photoActivity_timeTextView);
         textViewShowDate = findViewById(R.id.photoActivity_textViewShowDate);
+//        textView = findViewById(R.id.activity_photo_textView);
 
     }
 

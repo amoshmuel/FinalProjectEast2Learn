@@ -12,18 +12,37 @@ public class Photo implements Parcelable {
     private String photoNumber;
     private String userId;
     private double lat,lon;
+    private String pro;
+    private double weight;
+    private String profileType;
+    private int pricePerLesson;
+    private double dist;
+    private double rate;
+    private double costPrecent;
+    private int numOfRate;
+
     public Photo() {
 
     }
 
 
 
-    public Photo(String fullName, String email, String imageId, String userId) {
+    public Photo(String fullName, String email, String imageId, String userId, String pro, double weight,String profileType, int pricePerLesson,
+                 double dist, double rate, double costPrecent, int numOfRate) {
         super();
         this.fullName = fullName;
         this.email = email;
         this.imageId = imageId;
         this.userId = userId;
+        this.pro = pro;
+        this.weight = weight;
+        this.profileType = profileType;
+        this.pricePerLesson = pricePerLesson;
+        this.dist = dist;
+        this.rate = rate;
+        this.costPrecent = costPrecent;
+        this.numOfRate= numOfRate;
+
     }
     public static final Parcelable.Creator<Photo> CREATOR
             = new Parcelable.Creator<Photo>() {
@@ -44,6 +63,14 @@ public class Photo implements Parcelable {
         userId =in.readString();
         lat=in.readDouble();
         lon=in.readDouble();
+        pro=in.readString();
+        weight=in.readDouble();
+        profileType=in.readString();
+        pricePerLesson =in.readInt();
+        dist=in.readDouble();
+        rate=in.readDouble();
+        costPrecent =in.readDouble();
+        numOfRate =in.readInt();
     }
 
 
@@ -63,6 +90,14 @@ public class Photo implements Parcelable {
         parcel.writeString(userId);
         parcel.writeDouble(lat);
         parcel.writeDouble(lon);
+        parcel.writeString(pro);
+        parcel.writeDouble(weight);
+        parcel.writeString(profileType);
+        parcel.writeInt(pricePerLesson);
+        parcel.writeDouble(dist);
+        parcel.writeDouble(rate);
+        parcel.writeDouble(costPrecent);
+        parcel.writeInt(numOfRate);
     }
 
 
@@ -130,4 +165,62 @@ public class Photo implements Parcelable {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
+    public void setPro(String pro) {
+        this.pro = pro;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public String getPro() {
+        return pro;
+    }
+
+    public String getprofileType() {
+        return profileType;
+    }
+
+    public void setProfileType(String profileType) {
+        this.profileType = profileType;
+    }
+
+    public int getPricePerLesson() {
+        return pricePerLesson;
+    }
+    public void setPricePerLesson(int pricePerLesson) {
+        this.pricePerLesson = pricePerLesson;
+    }
+
+    public void setDist(double dist) {
+        this.dist = dist;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
+    }
+
+    public void setCostPrecent(double costPrecent) {
+        this.costPrecent = costPrecent;
+    }
+
+
+    public double getDist() {
+        return dist;
+    }
+
+    public double getCostPrecent() {
+        return costPrecent;
+    }
+    public double getRate() {
+        return rate;
+    }
+
+    public int getNumOfRate(){return numOfRate;}
+    public void setNumOfRate(int numOfRate){this.numOfRate = numOfRate;}
 }

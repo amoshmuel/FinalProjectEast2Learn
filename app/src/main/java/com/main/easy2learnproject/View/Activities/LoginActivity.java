@@ -130,6 +130,7 @@ public class LoginActivity extends AppCompatActivity {
         Log.d("pttt", "openMainActivity: ");
         Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
         myIntent.putExtra("EMAIL", EDT_email_check.getText().toString());
+        myIntent.setAction("Login");
         LoginActivity.this.startActivity(myIntent);
         LoginActivity.this.finish();
     }

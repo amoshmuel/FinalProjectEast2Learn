@@ -26,15 +26,30 @@
         <entry key="..\:/Users/Amos/AndroidStudioProjects/AmosProject/PaparatziApp/app/src/main/res/layout/fragment_map.xml" value="0.18518518518518517" />
         <entry key="..\:/Users/Amos/AndroidStudioProjects/AmosProject/PaparatziApp/app/src/main/res/layout/photo_recycler_row.xml" value="0.18518518518518517" />
         <entry key="..\:/Users/Amos/AndroidStudioProjects/AmosProject/PaparatziApp/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.6" />
+        <entry key="..\:/Users/Amos/AppData/Local/Android/Sdk/platforms/android-31/data/res/layout/simple_spinner_item.xml" value="0.26145833333333335" />
+        <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/drawable/ic_baseline_access_time.xml" value="0.19" />
         <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/drawable/ic_baseline_back_right_24.xml" value="0.166" />
+        <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/drawable/ic_baseline_calendar_date.xml" value="0.19" />
+        <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/activity_calendar.xml" value="0.215625" />
+        <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/activity_event_edit.xml" value="0.2" />
+        <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/activity_filter.xml" value="0.26145833333333335" />
+        <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/activity_introduce_question.xml" value="0.264" />
         <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/activity_login.xml" value="0.175" />
-        <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/activity_main.xml" value="0.21510416666666668" />
-        <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/activity_photo.xml" value="0.264" />
-        <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/activity_signup.xml" value="0.175" />
+        <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/activity_main.xml" value="0.2118561710398445" />
+        <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/activity_main_calendar.xml" value="0.2" />
+        <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/activity_photo.xml" value="0.176" />
+        <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/activity_signup.xml" value="0.264" />
+        <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/activity_week_view.xml" value="0.264" />
+        <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/calendar_cell.xml" value="0.19427083333333334" />
+        <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/event_cell.xml" value="0.19427083333333334" />
+        <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/fragment_calendar.xml" value="0.18177083333333333" />
+        <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/fragment_calendar_list.xml" value="0.26145833333333335" />
         <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/fragment_empty.xml" value="0.26145833333333335" />
         <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/fragment_list.xml" value="0.26145833333333335" />
         <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/fragment_map.xml" value="0.26145833333333335" />
+        <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/lesson_date_layout.xml" value="0.4" />
         <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/layout/photo_recycler_row.xml" value="0.26145833333333335" />
+        <entry key="..\:/Users/Amos/final project/easy2learn/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.264" />
       </map>
     </option>
   </component>

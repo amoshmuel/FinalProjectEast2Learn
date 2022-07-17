@@ -11,7 +11,7 @@ import com.main.easy2learnproject.R;
 
 public class ViewHolder extends RecyclerView.ViewHolder {
     private ImageView IMG_holder;
-    private TextView LBL_title,LBL_body,date;
+    private TextView LBL_name, LBL_email, LBL_price, LBL_rating,LBL_pro;
 
 
     public ViewHolder(@NonNull View itemView) {
@@ -21,9 +21,11 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
     private void initViews(View itemView) {
          IMG_holder=(ImageView)itemView.findViewById(R.id.photoRow_IMG_holder);
-         LBL_title=(TextView)itemView.findViewById(R.id.photoRow_LBL_title);
-         LBL_body=(TextView)itemView.findViewById(R.id.photoRow_LBL_body);
-         date=(TextView)itemView.findViewById(R.id.photoRow_LBL_date);
+         LBL_name =(TextView)itemView.findViewById(R.id.photoRow_LBL_title);
+         LBL_email =(TextView)itemView.findViewById(R.id.photoRow_LBL_body);
+         LBL_price =(TextView)itemView.findViewById(R.id.photoRow_LBL_price);
+         LBL_rating =(TextView)itemView.findViewById(R.id.photoRow_LBL_rating);
+         LBL_pro =(TextView)itemView.findViewById(R.id.photoRow_LBL_pro);
 
          itemView.setOnClickListener(new View.OnClickListener() {
              @Override
@@ -41,27 +43,38 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         this.IMG_holder = IMG_holder;
     }
 
-    public TextView getLBL_title() {
-        return LBL_title;
+    public TextView getLBL_name() {
+        return LBL_name;
     }
 
-    public void setLBL_title(TextView LBL_title) {
-        this.LBL_title = LBL_title;
+    public void setLBL_name(TextView LBL_name) {
+        this.LBL_name = LBL_name;
     }
 
-    public TextView getLBL_body() {
-        return LBL_body;
+    public TextView getLBL_email() {
+        return LBL_email;
     }
 
-    public void setLBL_body(TextView LBL_body) {
-        this.LBL_body = LBL_body;
+    public void setLBL_email(TextView LBL_email) {
+        this.LBL_email = LBL_email;
     }
 
-    public TextView getDate() {
-        return date;
+    public TextView getLBL_price() {
+        return LBL_price;
     }
 
-    public void setDate(TextView date) {
-        this.date = date;
+    public void setLBL_price(TextView LBL_price) {
+        this.LBL_price = LBL_price;
+    }
+
+    public TextView getLBL_rating() { return LBL_rating; }
+
+    public void setLBL_rating(TextView LBL_rating) {
+        this.LBL_rating = LBL_rating;
+    }
+    public TextView getLBL_pro() { return LBL_pro; }
+
+    public void setLBL_pro(TextView LBL_pro) {
+        this.LBL_pro = LBL_pro;
     }
 }

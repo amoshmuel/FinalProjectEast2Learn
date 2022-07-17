@@ -28,6 +28,7 @@ import com.main.easy2learnproject.Control.FireBase;
 import com.main.easy2learnproject.Control.GetListListener;
 import com.main.easy2learnproject.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -36,9 +37,11 @@ import static android.app.Activity.RESULT_OK;
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap googleMap;
+    private ArrayList<Photo> photosList;
 
     public MapFragment() {
         Log.d("pttt", "MapFragment: Empty constructor");
+        photosList = new ArrayList<Photo>();
     }
 
     @Override
@@ -69,27 +72,46 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         });
     }
 
-
+    public ArrayList<Photo> getAllListPhotosMap(){
+        FireBase.getInstance().getListItems(new GetListListener() {
+            @Override
+            public String getList(List<Photo> list) {
+                if(list == null)
+                    return null;
+                for (Photo n : list) {
+                    photosList.add(n);
+                }
+                return null;
+            }
+        });
+        return photosList;
+    }
 
     private void populateMapMarkers() {
         googleMap.clear();
         FireBase.getInstance().getListItems(new GetListListener() {
             @Override
-            public void getList(List<Photo> list) {
+            public String getList(List<Photo> list) {
                 if(list == null)
-                    return;
-                for (Photo n : list)
-                    addMarker(n);
+                    return null;
+                for (Photo n : list) {
+                    if (n.getprofileType().equals("Teacher")) {
+                        addMarker(n);
+                    }
+                }
+                return null;
             }
         });
     }
 
     private void addMarker(Photo n ){
+        if (n.getprofileType().equals("Student"))
+            return;
         // Creating a marker
         MarkerOptions markerOptions = new MarkerOptions();
         // Setting the position for the marker
         markerOptions.position(new LatLng(n.getLat(),n.getLon()));
-        markerOptions.title(n.getFullName());
+        markerOptions.title(n.getFullName() +" "+ String.valueOf(n.getRate()));
         // Placing a marker on the touched position
         googleMap.addMarker(markerOptions).setTag(n);
     }

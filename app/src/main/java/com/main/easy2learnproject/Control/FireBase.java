@@ -6,10 +6,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
-
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -22,25 +20,22 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.main.easy2learnproject.Model.Lesson;
 import com.main.easy2learnproject.Model.Photo;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 public class FireBase {
     private static FireBase instance;
     private FirebaseStorage storage ;
     private StorageReference storageRef;
     private StorageReference mainRef;
-    private StorageReference mainRefLesson;
+
 
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firestore ;
@@ -54,8 +49,6 @@ public class FireBase {
          firestore = FirebaseFirestore.getInstance();
          mainRef = storageRef.child("allPhotos");
          photoCollection = firestore.collection("photo");
-
-         mainRefLesson = storageRef.child("allLessons");
          lessonCollection = firestore.collection("lesson");
 
 
@@ -121,11 +114,14 @@ public class FireBase {
                 });
     }
 
+
+
+
     public void addUserByEmailAndPassword(String email, String password, Context context){
         Log.d("pttt", "addUserByEmailAndPassword: ");
+        System.out.println("email: "+email  + "pass: " +password);
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
-
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -161,25 +157,33 @@ public class FireBase {
 
     private Map<String, Object> makePhotoMap(Photo newPhoto){
         Map<String, Object> photo = new HashMap<>();
-        photo.put("title", newPhoto.getFullName());
-        photo.put("body", newPhoto.getEmail());
+        photo.put("fullName", newPhoto.getFullName());
+        photo.put("email", newPhoto.getEmail());
         photo.put("imageId", newPhoto.getImageId());
         photo.put("date", newPhoto.getDate());
         photo.put("userId", newPhoto.getUserId());
         photo.put("lat", newPhoto.getLat());
         photo.put("lon", newPhoto.getLon());
+        photo.put("pro", newPhoto.getPro());
+        photo.put("weight", newPhoto.getWeight());
+        photo.put("profileType", newPhoto.getprofileType());
+        photo.put("pricePerLesson", newPhoto.getPricePerLesson());
+        photo.put("dist", newPhoto.getDist());
+        photo.put("rate", newPhoto.getRate());
+        photo.put("costPrecent", newPhoto.getCostPrecent());
+        photo.put("numOfRate", newPhoto.getNumOfRate());
         return photo;
     }
 
 
-    private Map<String, Object> makeLessonMap(Lesson newLesson){
-        Map<String, Object> lesson = new HashMap<>();
-        lesson.put("title", newLesson.getTitle());
-        lesson.put("body", newLesson.getBody());
-        lesson.put("date", newLesson.getDate());
-        lesson.put("userId", newLesson.getUserId());
-        return lesson;
-    }
+//    private Map<String, Object> makeLessonMap(Lesson newLesson){
+//        Map<String, Object> lesson = new HashMap<>();
+//        lesson.put("title", newLesson.getTitle());
+//        lesson.put("body", newLesson.getBody());
+//        lesson.put("date", newLesson.getDate());
+//        lesson.put("userId", newLesson.getUserId());
+//        return lesson;
+//    }
 
 
     public void addPhotoInFireStore(Photo photo){
@@ -201,44 +205,45 @@ public class FireBase {
     }
 
 
-    public void addLessonInFireStore(Lesson lesson){
+//    public void addLessonInFireStore(Lesson lesson){
+//
+//        Map<String, Object> n = makeLessonMap(lesson);
+//        // Add a new document with a generated ID
+//        lessonCollection.add(n)
+//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                    @Override
+//                    public void onSuccess(DocumentReference documentReference) {
+//                        documentReference.update("lessonNumber",documentReference.getId());
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.w("pttt", "Error adding document", e);
+//                    }
+//                });
+//    }
 
-        Map<String, Object> n = makeLessonMap(lesson);
-        // Add a new document with a generated ID
-        lessonCollection.add(n)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        documentReference.update("lessonNumber",documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("pttt", "Error adding document", e);
-                    }
-                });
-    }
 
 
-    public void updateLessonInFireStore(Lesson lesson) {
-        Log.d("pttt", "updatePhotoInFireStore: "+ lesson.getLessonNumber());
-        Map<String, Object> n = makeLessonMap(lesson);
-        lessonCollection.document(lesson.getLessonNumber()).update(n)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("pttt", "Error adding document", e);
-                    }
-                });
-
-    }
+//    public void updateLessonInFireStore(Lesson lesson) {
+//        Log.d("pttt", "updatePhotoInFireStore: "+ lesson.getLessonNumber());
+//        Map<String, Object> n = makeLessonMap(lesson);
+//        lessonCollection.document(lesson.getLessonNumber()).update(n)
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.w("pttt", "Error adding document", e);
+//                    }
+//                });
+//
+//    }
 
 
     public void updatePhotoInFireStore(Photo photo) {
@@ -330,24 +335,26 @@ public class FireBase {
     }
 
 
-    public void getListItemsLesson(GetListListenerLesson listListener) {
-        lessonCollection.get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot documentSnapshots) {
-                        List<Lesson> types = documentSnapshots.toObjects(Lesson.class);
-                        listListener.getList(types);
-                        Log.d("pttt", "onSuccess: " );
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("TODO", "onFailure: ");
-                        listListener.getList(null);
-                    }
-                });
-    }
+
+//    public void getListItemsPhoto(GetListPhoto listListener) {
+//        photoCollection.get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot documentSnapshots) {
+//                        List<Photo> types = documentSnapshots.toObjects(Photo.class);
+//                        listListener.getListPhoto(types);
+//                        Log.d("pttt", "onSuccess: " );
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.d("TODO", "onFailure: ");
+//                        listListener.getListPhoto(null);
+//                    }
+//                });
+//    }
+
 
 
     public void downloadStorageData(String imageId, Context context, ImageView imageView) {

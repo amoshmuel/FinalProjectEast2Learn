@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/blur_back1" />
+        android:src="@drawable/dirty" />
 
 
     <LinearLayout
@@ -29,8 +29,8 @@
 
         <ImageView
             android:id="@+id/mainActivity_IMG_holder"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:src="@mipmap/ic_camera" />
 
         <LinearLayout
@@ -39,12 +39,12 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <TextView
-                android:id="@+id/accountRow_LBL_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/name_label"
-                android:textColor="@color/black" />
+<!--            <TextView-->
+<!--                android:id="@+id/accountRow_LBL_name"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/name_label"-->
+<!--                android:textColor="@color/black" />-->
 
             <TextView
                 android:id="@+id/accountRow_LBL_email"
@@ -68,6 +68,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@id/mainActivity_LL_account" />
+
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/activity_main_BTN_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/mainActivity_LL_account"
+        app:layout_constraintLeft_toLeftOf="@+id/mainActivity_LL_account"
+        android:clickable="true"
+        android:padding="10dp"
+        android:background="?android:selectableItemBackground"
+        android:text="Filter"
+        android:textSize="15dp"/>
+
+    <Spinner
+        android:id="@+id/activity_main_SPN_sort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/mainActivity_LL_account"
+        app:layout_constraintRight_toRightOf="@+id/mainActivity_LL_account"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        tools:ignore="MissingConstraints" />
+
 
     <FrameLayout
         android:id="@+id/mainActivity_LAY_container"
